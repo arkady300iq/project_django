@@ -24,8 +24,6 @@ class Booking(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.room}"
 
-
-
     class Meta:
         verbose_name = "Booking"
         verbose_name_plural = "Bookings"

@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from booking.models import Room, Booking
+from booking.form import RoomForm
 from django.http import HttpResponse
 
 def index(request):
@@ -56,4 +57,13 @@ def booking_details(request, pk):
             status = 404
         )
     
-
+def room_edit(request, pk):
+    room = Room.objects.get(pk=pk)
+    if request.method == "POST":
+        form = RoomForm(request.POST, instance=room)
+        if form.is_valid():
+            form.save()
+            return redirect("rooms-list")
+    else:
+        form = RoomForm(instance=room)
+    return render(request, "booking/room_form.html", {"form": form})
